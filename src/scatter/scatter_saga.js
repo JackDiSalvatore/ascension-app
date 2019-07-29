@@ -84,7 +84,7 @@ function* fetchUserWallet(){
   try{
     const wallet = yield call(getWallet);
     yield put(setWallet(wallet));
-    notifySuccess(`fetched wallet`, 1);
+    //notifySuccess(`fetched wallet`, 1);
   }catch(e){
     yield put(errorGettingWallet({message: e.message}));
     notifyError('Error fetching wallet !', 3);
