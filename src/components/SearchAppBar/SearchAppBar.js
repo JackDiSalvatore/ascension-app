@@ -12,7 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 // import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
-//import SelectChain from './SelectChain';
+//import SelectChain from './SelectChain'; // TODO: I can probably remove this
 
 import eosLogo from './eosLogo.png';
 // import arrowIcon from'./arrow.png';
@@ -131,7 +131,6 @@ class SearchAppBar extends Component {
   }
 
   render() {
-    // const { classes, chainId } = this.props;
     const { classes, loggedIn, userAccount } = this.props;
 
     return (
@@ -209,7 +208,7 @@ class SearchAppBar extends Component {
                       className={classes.button}
                       onClick={this.handleLogOut.bind(this)}
                     >
-                      Log out
+                      Logout
                     </Button>
 
                     <Typography className={classes.textStyle}>
@@ -227,7 +226,7 @@ class SearchAppBar extends Component {
                     className={classes.button}
                     onClick={this.handleLogIn.bind(this)}
                   >
-                    Log in
+                    Login
                   </Button>
               }
             </Grid>
