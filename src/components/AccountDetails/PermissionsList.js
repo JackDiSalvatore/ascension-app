@@ -29,6 +29,7 @@ const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
     borderRadius: '1em',
+    boxShadow: '0px 0px 15px #000000',
     backgroundColor: theme.palette.primary.contrastText,
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
