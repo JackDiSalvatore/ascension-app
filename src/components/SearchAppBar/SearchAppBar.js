@@ -29,7 +29,9 @@ const styles = theme => ({
     color: theme.palette.secondary.main,
   },
   toolbarStyles: {
-    padding: '10px 32px 10px 32px'
+    backgroundColor: 'rgb(27, 27, 29)',
+    padding: '10px 32px 10px 32px',
+    borderRadius: 0,
   },
   gridStyles: {
     // border: '2px solid purple',
@@ -138,7 +140,7 @@ class SearchAppBar extends Component {
 
     return (
       <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{boxShadow: 'none'}}>
         <Toolbar className={classes.toolbarStyles}>
 
           <Grid container
