@@ -25,6 +25,9 @@ const styles = theme => ({
   textStyle: {
     color: theme.palette.secondary.contrastText,
   },
+  versionTextStyle: {
+    color: theme.palette.secondary.main,
+  },
   toolbarStyles: {
     padding: '10px 32px 10px 32px'
   },
@@ -199,36 +202,53 @@ class SearchAppBar extends Component {
             </Grid>
 
             <Grid item>
-              {
-                loggedIn ?
-                  <div>
-                    <Button 
+              <Grid container
+                  spacing={2}
+                  direction="row"
+                  justify="flex-start"
+                  alignItems="center"
+                  className={classes.gridStyles}
+                >
+
+                <Grid item>
+                  <Typography className={classes.versionTextStyle} variant="h6">
+                    beta
+                  </Typography>
+                </Grid>
+
+                <Grid item>
+                {
+                  loggedIn ?
+                    <div>
+                      <Button 
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={this.handleLogOut.bind(this)}
+                      >
+                        Logout
+                      </Button>
+
+                      <Typography className={classes.textStyle}>
+                        {
+                          userAccount.name
+                        }@{
+                          userAccount.keyType
+                        }
+                      </Typography>
+                    </div>
+                    :
+                    <Button
                       variant="contained"
                       color="secondary"
                       className={classes.button}
-                      onClick={this.handleLogOut.bind(this)}
+                      onClick={this.handleLogIn.bind(this)}
                     >
-                      Logout
+                      Login
                     </Button>
-
-                    <Typography className={classes.textStyle}>
-                      {
-                        userAccount.name
-                      }@{
-                        userAccount.keyType
-                      }
-                    </Typography>
-                  </div>
-                  :
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
-                    onClick={this.handleLogIn.bind(this)}
-                  >
-                    Login
-                  </Button>
-              }
+                }
+                </Grid>
+              </Grid>
             </Grid>
 
           </Grid>
