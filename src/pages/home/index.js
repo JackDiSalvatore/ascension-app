@@ -142,7 +142,7 @@ class Home extends Component{
           accountInfo={accountInfo}
           delband={delband}
           rexBalance={rexBalance}
-        />        
+        />
             
       </div>
     );
