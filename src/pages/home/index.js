@@ -12,6 +12,7 @@ import {
   sendTokens
 } from '../../scatter/scatter_actions';
 
+import { SetActionHistoryAction } from '../../actions/SetActionHistoryAction';
 import { SetEndpointAction } from '../../actions/SetEndpointAction';
 import { SetAccountAction } from '../../actions/SetAccountAction';
 import { SetREXBalanceAction } from '../../actions/SetREXBalanceAction';
@@ -20,6 +21,7 @@ import { SetdelbandAction } from '../../actions/SetdelbandAction';
 // Components
 import AccountDetails from '../../components/AccountDetails/AccountDetails';
 import SearchAppBar from '../../components/SearchAppBar/SearchAppBar';
+import ActionHistory from '../../components/ActionHistory/ActionHistory';
 
 
 class Home extends Component{
@@ -109,6 +111,19 @@ class Home extends Component{
     } catch (error) {
       console.log(error);
     }
+
+    // json: true,
+    // pos: '-1',
+    // offset: '-20',
+    // account_name: 'eosio'
+
+    // get action history
+    rpc.history_get_actions(accountName).then(result => {
+      //console.log(result.actions)
+      this.setState({ actionHistory: result.actions})
+      // CALL ACTION
+      this.props.setActionHistory(result.actions)
+    })
   }
 
   componentDidMount() {
@@ -118,7 +133,7 @@ class Home extends Component{
 
   render(){
     const { userAccount, loggedIn, userWallet} = this.props.scatter;
-    const { accountInfo, delband, rexBalance } = this.props;
+    const { accountInfo, actionHistory, delband, rexBalance } = this.props;
 
     const {
       loginUser,
@@ -143,6 +158,8 @@ class Home extends Component{
           delband={delband}
           rexBalance={rexBalance}
         />
+
+        <ActionHistory actionHistory={actionHistory}/>
             
       </div>
     );
@@ -156,6 +173,7 @@ const mapStateToProps = (state) => {
     // Endpoint
     endpoint: state.endpoint,
     // Account Search
+    actionHistory: state.actionHistory,
     accountInfo: state.accountInfo,
     rexBalance: state.rexBalance,
     delband: state.delband,
@@ -169,6 +187,7 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => { dispatch(logout()) },
     setFetchWallet: () => { dispatch(fetchWallet()) },
     // Account Search
+    setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
     setEndpoint: (endpoint) => { dispatch(SetEndpointAction(endpoint)) },
     setUser: (accountInfo) => { dispatch(SetAccountAction(accountInfo)) },
     setREXBalance: (rexBalance) => { dispatch(SetREXBalanceAction(rexBalance)) },
