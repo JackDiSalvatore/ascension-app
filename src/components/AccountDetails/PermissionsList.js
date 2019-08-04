@@ -13,6 +13,7 @@ const styles = theme => ({
   },
   authorityTextStyle: {
     color: theme.palette.primary.main,
+    paddingRight: '2em',
     // fontFamily: 'Exo2Bold',
   },
   textStyle: {
@@ -41,7 +42,7 @@ const styles = theme => ({
     //   border: '1px dotted red'
   },
   thresholdStyle: {
-    width: 250,
+    //width: 250,
   }
 });
 
