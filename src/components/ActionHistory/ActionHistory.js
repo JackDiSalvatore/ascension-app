@@ -162,7 +162,8 @@ export default function ActionHistory(props) {
     setPage(0);
   }
 
-  
+  //{ new Date(row.action_trace.block_time).toTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/\(.*/,'') }
+  //{ new Date(row.action_trace.block_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/^[0|\D]*/,'') }
   return (
     <div className={classes.root}>
       <Typography className={classes.headerTextStyle} variant="h5">
@@ -188,16 +189,12 @@ export default function ActionHistory(props) {
                   <StyledTableCell component="th" scope="row" align="left">
                     <Grid container direction="column" justify="flex-start" alignItems="flex-start" spacing={0}>
                       <Grid item>
-                        {/* Jan = 0 */}
-                        { new Date(row.action_trace.block_time).getMonth()+1 }/
-                        { new Date(row.action_trace.block_time).getDate() }/
-                        { new Date(row.action_trace.block_time).getFullYear() } 
+                        {  new Date(row.action_trace.block_time).toLocaleDateString() }
                       </Grid>
 
                       <Grid item>
-                        { new Date(row.action_trace.block_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/^[0|\D]*/,'') }
-                        
-                      </Grid>  
+                        { new Date(row.action_trace.block_time).toTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/^[0|\D]*/,'').replace(/\(.*/,'') }
+                      </Grid>
                     </Grid>
                   </StyledTableCell>
 
