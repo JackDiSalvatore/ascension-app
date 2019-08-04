@@ -21,6 +21,9 @@ sagaMiddleware.run(rootSaga);
 
 const theme = createMuiTheme({
 	palette: {
+		background: {
+			main: 'rgb(27,27,29)',
+		},
 		primary: {
 			main: "#000", // Black
 			contrastText: "#8DFFA9" // Green
