@@ -13,27 +13,27 @@ import TotalResources from './TotalResources';
 import VoterInfo from './VoterInfo';
 
 const styles = theme => ({
-    root: {
-      flexGrow: 1,
-      textAlign: 'center',
-      //width: '75%',
-      // margin: '1% auto 1% auto',
-      // border: '1mm solid rgba(174, 223, 212, .6)'
-    },
-    gridStyles: {
-      margin: 'auto',
-      width: '100%',
-    },
-    itemStyle: {
-      // marginRight: '5px',
-      // marginLeft: '5px',
-      // border: '1px dotted blue'
-    },
-    hrStyle: {
-      // marginTop: '37px',
-      // clear: 'both',
-      visibility: 'hidden',
-    }
+  root: {
+    flexGrow: 1,
+    textAlign: 'center',
+    //width: '75%',
+    // margin: '1% auto 1% auto',
+    // border: '1mm solid rgba(174, 223, 212, .6)'
+  },
+  gridStyles: {
+    margin: 'auto',
+    width: '100%',
+  },
+  itemStyle: {
+    // marginRight: '5px',
+    // marginLeft: '5px',
+    // border: '1px dotted blue'
+  },
+  hrStyle: {
+    // marginTop: '37px',
+    // clear: 'both',
+    visibility: 'hidden',
+  }
 });
   
 
