@@ -143,7 +143,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ActionHistory(props) {
   const classes = useStyles();
-  const actions = props.actionHistory
+  const actions = props.actionHistory.reverse()
 
   //console.log('Action History')
   //console.log(JSON.stringify(actions[0].action_trace.act.data))
