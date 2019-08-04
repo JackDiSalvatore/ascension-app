@@ -128,7 +128,7 @@ class Home extends Component{
 
   componentDidMount() {
     // Default Account
-    this.getAccountDetails('b1');
+    this.getAccountDetails('wizznetwork1');
   }
 
   render(){
