@@ -120,7 +120,7 @@ class Home extends Component{
     // get action history
     rpc.history_get_actions(accountName).then(result => {
       //console.log(result.actions)
-      this.setState({ actionHistory: result.actions})
+      this.setState({ actionHistory: result.actions })
       // CALL ACTION
       this.props.setActionHistory(result.actions)
     })
