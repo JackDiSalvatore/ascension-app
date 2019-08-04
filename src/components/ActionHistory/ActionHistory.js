@@ -188,13 +188,15 @@ export default function ActionHistory(props) {
                   <StyledTableCell component="th" scope="row" align="left">
                     <Grid container direction="column" justify="flex-start" alignItems="flex-start" spacing={0}>
                       <Grid item>
-                        { new Date(row.action_trace.block_time).getMonth() }/
-                        { new Date(row.action_trace.block_time).getDay() }/
+                        {/* Jan = 0 */}
+                        { new Date(row.action_trace.block_time).getMonth()+1 }/
+                        { new Date(row.action_trace.block_time).getDate() }/
                         { new Date(row.action_trace.block_time).getFullYear() } 
                       </Grid>
 
                       <Grid item>
                         { new Date(row.action_trace.block_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/^[0|\D]*/,'') }
+                        
                       </Grid>  
                     </Grid>
                   </StyledTableCell>
