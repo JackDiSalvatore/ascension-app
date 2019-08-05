@@ -214,7 +214,7 @@ class SearchAppBar extends Component {
 
                 <Grid item>
                   <Typography className={classes.versionTextStyle} variant="h6">
-                    beta
+                    alpha
                   </Typography>
                 </Grid>
 
