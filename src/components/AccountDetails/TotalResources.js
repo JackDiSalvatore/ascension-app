@@ -143,9 +143,36 @@ class TotalResources extends Component {
 
                   <HtmlTooltip title={
                     <React.Fragment>
-                      <Typography>
-                        { (accountInfo.cpu_limit.available / 1000000) } Seconds
-                      </Typography>
+                      <Grid container direction="column" alignItems="stretch" justify="center" spacing={0}>
+                        <Grid item>
+                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
+                            <Grid item>
+                              <Typography>
+                                Used: 
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { (accountInfo.cpu_limit.used / 1000000) } s
+                              </Typography>
+                            </Grid>
+                          </Grid>    
+                        </Grid>
+                        <Grid item>
+                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
+                            <Grid item>
+                              <Typography>
+                                Available: 
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { (accountInfo.cpu_limit.available / 1000000) } s
+                              </Typography>
+                            </Grid>
+                          </Grid>    
+                        </Grid>
+                      </Grid>
                     </React.Fragment>
                     } placement="top">
 
@@ -157,9 +184,36 @@ class TotalResources extends Component {
 
                   <HtmlTooltip title={
                     <React.Fragment>
-                      <Typography>
-                        {accountInfo.net_limit.available} Bytes
-                      </Typography>
+                      <Grid container direction="column" alignItems="stretch" justify="center" spacing={0}>
+                        <Grid item>
+                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
+                            <Grid item>
+                              <Typography>
+                                Used: 
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { accountInfo.net_limit.used } B
+                              </Typography>
+                            </Grid>
+                          </Grid>    
+                        </Grid>
+                        <Grid item>
+                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
+                            <Grid item>
+                              <Typography>
+                                Available: 
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                { accountInfo.net_limit.available } B
+                              </Typography>
+                            </Grid>
+                          </Grid>    
+                        </Grid>
+                      </Grid>
                     </React.Fragment>
                     } placement="bottom">
 
