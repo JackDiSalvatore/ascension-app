@@ -305,18 +305,6 @@ class TotalResources extends Component {
                 </Typography>
               </Grid>
 
-              {/* <Grid item>
-                <Typography style={{fontSize:12}} variant="body1" gutterBottom>
-                  Available
-                </Typography>
-                <Typography style={{fontSize:12}} variant="body1" gutterBottom>
-                  <span> { (accountInfo.cpu_limit.available / 1000000) } seconds</span>
-                </Typography>
-                <Typography style={{fontSize:12}} variant="body1" gutterBottom>
-                  <span> {accountInfo.net_limit.available} bytes </span>
-                </Typography>
-              </Grid> */}
-
             </Grid>
           </Grid>
 
