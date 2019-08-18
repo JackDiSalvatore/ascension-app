@@ -55,56 +55,56 @@ class RAM extends Component {
     return (Math.floor(bytes / Math.pow(1024, i) * 1000) / 1000) + ' ' + sizes[i]
   }
 
-    render() {
-        const { classes, accountInfo } = this.props;
+  render() {
+    const { classes, accountInfo } = this.props;
 
-        var RAM_usage = this.toByteUnits(accountInfo.ram_usage)
-        var RAM_quota = this.toByteUnits(accountInfo.ram_quota)
+    var RAM_usage = this.toByteUnits(accountInfo.ram_usage)
+    var RAM_quota = this.toByteUnits(accountInfo.ram_quota)
 
-        const percentage = Math.floor((accountInfo.ram_usage / accountInfo.ram_quota)*100);
+    const percentage = Math.floor((accountInfo.ram_usage / accountInfo.ram_quota)*100);
 
-        return (
-          <Grid container direction="column" spacing={0} className={classes.root}>
+    return (
+      <Grid container direction="column" spacing={0} className={classes.root}>
 
-            <Grid item>
-              <CircularProgressbarWithChildren
-                value={percentage}
-                // text={`${percentage}%`}
-                className={classes.progress}
-                strokeWidth={12}
-                styles={buildStyles({
-                    fontFamily: `Exo2Regular`,
-                    // pathColor: `radial-gradient(50% 76%, #E424C8 77%, #7A0025 70%)`,
-                    pathColor: `#E424C8`,
-                    textColor: `#E424C8`,
-                    trailColor: `#8DFFA9`,
-                    strokeLinecap: 'butt',
-                    textSize: '16px',
-                  })}
-              >
-                <HtmlTooltip title={
-                  <React.Fragment>
-                    <Typography>
-                      { RAM_usage } / { RAM_quota }
-                    </Typography>
-                  </React.Fragment>
-                  } placement="top">
-
-                  <Typography className={classes.textStyle} variant="h6">
-                    {percentage}%
-                  </Typography>
-
-                </HtmlTooltip>
-
-                <Typography className={classes.specialTextStyle} variant="h5">
-                  RAM
+        <Grid item>
+          <CircularProgressbarWithChildren
+            value={percentage}
+            // text={`${percentage}%`}
+            className={classes.progress}
+            strokeWidth={12}
+            styles={buildStyles({
+                fontFamily: `Exo2Regular`,
+                // pathColor: `radial-gradient(50% 76%, #E424C8 77%, #7A0025 70%)`,
+                pathColor: `#E424C8`,
+                textColor: `#E424C8`,
+                trailColor: `#8DFFA9`,
+                strokeLinecap: 'butt',
+                textSize: '16px',
+              })}
+          >
+            <HtmlTooltip title={
+              <React.Fragment>
+                <Typography>
+                  { RAM_usage } / { RAM_quota }
                 </Typography>
-              </CircularProgressbarWithChildren>
-            </Grid>
+              </React.Fragment>
+              } placement="top">
 
-          </Grid>
-        )
-    }
+              <Typography className={classes.textStyle} variant="h6">
+                {percentage}%
+              </Typography>
+
+            </HtmlTooltip>
+
+            <Typography className={classes.specialTextStyle} variant="h5">
+              RAM
+            </Typography>
+          </CircularProgressbarWithChildren>
+        </Grid>
+
+      </Grid>
+    )
+  }
 }
 
 export default withStyles(styles)(RAM);
