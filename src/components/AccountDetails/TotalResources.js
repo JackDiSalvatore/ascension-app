@@ -60,6 +60,46 @@ const HtmlTooltip = withStyles(theme => ({
 
 
 class TotalResources extends Component {
+  
+  usToTime = (cpu_limit_used) => {
+    cpu_limit_used = parseInt(cpu_limit_used)
+    // console.log(cpu_limit_used + ' us')
+    var us = Math.floor( (cpu_limit_used % 1000) * 1000) / 1000
+    var ms = Math.floor(((cpu_limit_used / 1000) % 1000) * 1000 ) / 1000
+    var s  = Math.floor( (cpu_limit_used / 1000000 % 60) * 1000 ) / 1000
+    var m  = Math.floor(((cpu_limit_used / (1000000 * 60)) % 60) * 1000 ) / 1000
+    var h  = Math.floor(((cpu_limit_used / (1000000 * 60 * 60)) % 24) * 1000 ) / 1000
+    var d  = Math.floor(((cpu_limit_used / (1000000 * 60 * 60 * 24)) % 365 ) * 1000 ) / 1000
+    
+    if (d > 1)
+      return d + ' days'
+    if (h > 1)
+      return h + ' h'
+    if (m > 1)
+      return m + ' m'
+    if (s > 1)
+      return s + ' s'
+    if (ms > 1)
+      return ms + ' ms'    
+    if (us > 1)
+      return us + ' µs'
+
+    return '0 s'
+  }
+
+  // Bytes
+  toByteUnits = (bytes) => {
+    bytes = parseInt(bytes)
+    // console.log(bytes)
+
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+    if (bytes == 0) return '0 Bytes'
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+
+    // console.log( Math.floor(bytes / Math.pow(1024, i) * 1000) / 1000 )
+    // return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    return (Math.floor(bytes / Math.pow(1024, i) * 1000) / 1000) + ' ' + sizes[i]
+  }
 
     render() {
         const { classes, accountInfo, delband } = this.props;
@@ -114,6 +154,29 @@ class TotalResources extends Component {
           selfResourcesNET = parseFloat(accountInfo.self_delegated_bandwidth.net_weight.split(' ')[0])
         }
 
+        // Available Resources: CPU and NET
+        var CPU_limit_used_base = '0 s'
+        var CPU_limit_available_base = '0 s'
+
+        if (accountInfo.cpu_limit.used == '-1' || accountInfo.cpu_limit.used == '-1') {
+          CPU_limit_used_base = 'infinity'
+          CPU_limit_available_base = 'infinity'  
+        } else {
+          CPU_limit_used_base = this.usToTime(accountInfo.cpu_limit.used)
+          CPU_limit_available_base = this.usToTime(accountInfo.cpu_limit.available)
+        }
+
+        var NET_limit_used = '0 Bytes'
+        var NET_limit_available = '0 Bytes'
+
+        if (accountInfo.net_limit.used == '-1' || accountInfo.net_limit.used == '-1') {
+          NET_limit_used = 'infinity'
+          NET_limit_available = 'infinity'  
+        } else {
+          NET_limit_used = this.toByteUnits(accountInfo.net_limit.used)
+          NET_limit_available = this.toByteUnits(accountInfo.net_limit.available)
+        }
+
         return (
           <Grid item container direction="column" justify="center" alignItems="flex-start" spacing={0} className={classes.root}>
 
@@ -143,35 +206,26 @@ class TotalResources extends Component {
 
                   <HtmlTooltip title={
                     <React.Fragment>
-                      <Grid container direction="column" alignItems="stretch" justify="center" spacing={0}>
+                      <Grid container direction="row" alignItems="center" justify="flex-start" spacing={2}>
+                          
                         <Grid item>
-                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
-                            <Grid item>
-                              <Typography>
-                                Used: 
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { (accountInfo.cpu_limit.used / 1000000) } s
-                              </Typography>
-                            </Grid>
-                          </Grid>    
+                          <Typography>
+                            Used: 
+                          </Typography>
+                          <Typography>
+                            Available: 
+                          </Typography>
                         </Grid>
+
                         <Grid item>
-                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
-                            <Grid item>
-                              <Typography>
-                                Available: 
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { (accountInfo.cpu_limit.available / 1000000) } s
-                              </Typography>
-                            </Grid>
-                          </Grid>    
+                          <Typography>
+                            { CPU_limit_used_base }
+                          </Typography>
+                          <Typography>
+                            { CPU_limit_available_base }
+                          </Typography>
                         </Grid>
+                        
                       </Grid>
                     </React.Fragment>
                     } placement="top">
@@ -184,35 +238,26 @@ class TotalResources extends Component {
 
                   <HtmlTooltip title={
                     <React.Fragment>
-                      <Grid container direction="column" alignItems="stretch" justify="center" spacing={0}>
+                      <Grid container direction="row" alignItems="center" justify="flex-start" spacing={2}>
+
                         <Grid item>
-                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
-                            <Grid item>
-                              <Typography>
-                                Used: 
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { accountInfo.net_limit.used } B
-                              </Typography>
-                            </Grid>
-                          </Grid>    
+                          <Typography>
+                            Used: 
+                          </Typography>
+                          <Typography>
+                            Available: 
+                          </Typography>
                         </Grid>
+
                         <Grid item>
-                          <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.root}>
-                            <Grid item>
-                              <Typography>
-                                Available: 
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography>
-                                { accountInfo.net_limit.available } B
-                              </Typography>
-                            </Grid>
-                          </Grid>    
+                          <Typography>
+                            { NET_limit_used }
+                          </Typography>
+                          <Typography>
+                            { NET_limit_available }
+                          </Typography>
                         </Grid>
+                      
                       </Grid>
                     </React.Fragment>
                     } placement="bottom">
