@@ -71,12 +71,12 @@ const styles = theme => ({
   searchIcon: {
     width: theme.spacing(7),
     height: '100%',
-    position: 'absolute',
+    // position: 'absolute',
     color: '#8DFFA9',
     // pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // display: 'flex',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   eosLogo: {
     width: theme.spacing(4),
@@ -99,7 +99,7 @@ const styles = theme => ({
     color: 'inherit',
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
+    padding: theme.spacing(1, 1, 1, 1),
     transition: theme.transitions.create('width'),
     width: '100%',
     // [theme.breakpoints.up('sm')]: {
