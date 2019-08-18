@@ -41,9 +41,25 @@ const HtmlTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 class RAM extends Component {
+  
+  toByteUnits = (bytes) => {
+    bytes = parseInt(bytes)
+    // console.log(bytes)
+
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+    if (bytes == 0) return '0 Bytes'
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+
+    // console.log( Math.floor(bytes / Math.pow(1024, i) * 1000) / 1000 )
+    // return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    return (Math.floor(bytes / Math.pow(1024, i) * 1000) / 1000) + ' ' + sizes[i]
+  }
 
     render() {
         const { classes, accountInfo } = this.props;
+
+        var RAM_usage = this.toByteUnits(accountInfo.ram_usage)
+        var RAM_quota = this.toByteUnits(accountInfo.ram_quota)
 
         const percentage = Math.floor((accountInfo.ram_usage / accountInfo.ram_quota)*100);
 
@@ -69,7 +85,7 @@ class RAM extends Component {
                 <HtmlTooltip title={
                   <React.Fragment>
                     <Typography>
-                      {accountInfo.ram_usage} Bytes / { + accountInfo.ram_quota} Bytes
+                      { RAM_usage } / { RAM_quota }
                     </Typography>
                   </React.Fragment>
                   } placement="top">
