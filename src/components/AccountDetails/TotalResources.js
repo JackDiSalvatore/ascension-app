@@ -74,9 +74,9 @@ class TotalResources extends Component {
     if (d > 1)
       return d + ' days'
     if (h > 1)
-      return h + ' h'
+      return h + ' hours'
     if (m > 1)
-      return m + ' m'
+      return m + ' mins'
     if (s > 1)
       return s + ' s'
     if (ms > 1)
