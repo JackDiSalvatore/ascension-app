@@ -84,7 +84,7 @@ class Home extends Component{
         code: 'eosio',                // contract who owns the table
         scope: accountName,               // scope of the table
         table: 'delband',              // name of the table as specified by the contract abi
-        limit: 100000,                    // Here we limit to 1 to get only the
+        limit: 10000000,              // Here we limit to 10 million
         reverse: false,               // Optional: Get reversed data
         show_payer: false,            // Optional: Show ram payer
       }).then(result => {
