@@ -3,10 +3,10 @@
 // const jungleTestNet = 'https://jungle2.cryptolions.io:443'
 // const jungleTestnetFUllNode = 'https://junglehistory.cryptolions.io:443'
 // const mainNet = 'https://api.eosdetroit.io:443';
-// const mainNetHistory = 'https://public.eosinfra.io';
+// const mainNetHistory = 'https://eos.greymass.com:443';
 // const mainNetBackup = 'http://api.cypherglass.com:8888';
 
-const initialState = 'https://public.eosinfra.io' // Mainnet history
+const initialState = 'https://eos.greymass.com:443' // Mainnet history
   
 export default function(state = initialState, action) {
   switch(action.type) {
