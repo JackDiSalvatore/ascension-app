@@ -180,7 +180,7 @@ export default function ActionHistory(props) {
               <TableRow>
                 <StyledTableCell align="left" className={classes.tableHeaderTextStyle} width="10%">Date</StyledTableCell>
                 <StyledTableCell align="left" className={classes.tableHeaderTextStyle} width="20%">Name</StyledTableCell>
-                <StyledTableCell align="left" className={classes.tableHeaderTextStyle}>Data</StyledTableCell>
+                <StyledTableCell align="left" className={classes.tableHeaderTextStyle} width="70%">Data</StyledTableCell>
               </TableRow>
             </TableHead>
 
