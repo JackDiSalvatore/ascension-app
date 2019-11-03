@@ -20,6 +20,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+import moment from 'moment'
+
 // ======================================================== //
 
 const useStyles1 = makeStyles(theme => ({
@@ -189,12 +191,13 @@ export default function ActionHistory(props) {
                   <StyledTableCell component="th" scope="row" align="left">
                     <Grid container direction="column" justify="flex-start" alignItems="flex-start" spacing={0}>
                       <Grid item>
-                        {  new Date(row.action_trace.block_time).toLocaleDateString() }
+                        {  moment(row.action_trace.block_time + 'Z').format('L') }
                       </Grid>
 
                       <Grid item>
-                        { new Date(row.action_trace.block_time).toTimeString([], {hour: '2-digit', minute:'2-digit'}).replace(/^[0|\D]*/,'').replace(/\(.*/,'') }
+                        {  moment(row.action_trace.block_time + 'Z').format('h:mm:ss a').toUpperCase() }
                       </Grid>
+
                     </Grid>
                   </StyledTableCell>
 
