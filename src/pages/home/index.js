@@ -132,7 +132,7 @@ class Home extends Component{
 
   componentDidMount() {
     // Default Account
-    this.getAccountDetails('eosio');
+    this.getAccountDetails('jackstarship');
   }
 
   render(){
