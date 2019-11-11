@@ -4,6 +4,8 @@ import { JsonRpc } from 'eosjs';
 
 import './home.css';
 
+import Grid from '@material-ui/core/Grid';
+
 // Actions
 import {
   requestLogin,
@@ -22,6 +24,7 @@ import { SetdelbandAction } from '../../actions/SetdelbandAction';
 import AccountDetails from '../../components/AccountDetails/AccountDetails';
 import SearchAppBar from '../../components/SearchAppBar/SearchAppBar';
 import ActionHistory from '../../components/ActionHistory/ActionHistory';
+import EOSActions from '../../components/EOSActions/EOSActions';
 
 
 class Home extends Component{
@@ -54,9 +57,10 @@ class Home extends Component{
     this.props.logout()
   } 
 
-  // sendTokens = ({toAccount,amount,memo}) => {
-  //   this.props.dispatch(sendTokens({toAccount,amount,memo}))
-  // };
+  sendTokens = ({to, amount, memo}) => {
+    // console.log(toAccount + ' ' + amount + ' ' + memo);
+    this.props.sendTokens({to, amount, memo})
+  }
 
   static getDerivedStateFromProps(props){
     const
@@ -128,7 +132,7 @@ class Home extends Component{
 
   componentDidMount() {
     // Default Account
-    this.getAccountDetails('wizznetwork1');
+    this.getAccountDetails('eosio');
   }
 
   render(){
@@ -153,14 +157,32 @@ class Home extends Component{
           userAccount={userAccount}
         />
 
-        <AccountDetails
-          accountInfo={accountInfo}
-          delband={delband}
-          rexBalance={rexBalance}
-        />
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+          >
 
-        <ActionHistory actionHistory={actionHistory}/>
-            
+            <AccountDetails
+              accountInfo={accountInfo}
+              delband={delband}
+              rexBalance={rexBalance}
+            />
+
+            {
+              loggedIn ?
+              <EOSActions
+                userAccount={userAccount}
+                sendTokens={sendTokens}
+              />
+              :
+              <div/>
+            }
+
+            <ActionHistory actionHistory={actionHistory}/>
+          </Grid>
       </div>
     );
   }
@@ -186,6 +208,8 @@ const mapDispatchToProps = (dispatch) => {
     login: () => { dispatch(requestLogin()) },
     logout: () => { dispatch(logout()) },
     setFetchWallet: () => { dispatch(fetchWallet()) },
+    // Transfer Tokens
+    sendTokens: ({to, amount, memo}) => { dispatch(sendTokens({to, amount, memo})) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
     setEndpoint: (endpoint) => { dispatch(SetEndpointAction(endpoint)) },
