@@ -93,7 +93,7 @@ class TokenTransfer extends Component {
       this.state = {
         to: '',
         amount: '',
-        memo: 'sent via chestnut'
+        memo: 'sent via ascension'
       };
 
       this.handleChange = this.handleChange.bind(this);
