@@ -1,5 +1,5 @@
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs2';
+import ScatterJS from '@scatterjs/core';
+import ScatterEOS from '@scatterjs/eosjs2';
 import { Api, JsonRpc, JsSignatureProvider } from 'eosjs';
 
 import {
@@ -17,32 +17,32 @@ ScatterJS.plugins( new ScatterEOS() );
 // ENDPOINTS
 
 // Jungle TestNet - https://junglehistory.cryptolions.io:443
-// const network = ScatterJS.Network.fromJson({
-//   blockchain:'eos',
-//   chainId:'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
-//   host:'jungle2.cryptolions.io',
-//   port:443,
-//   protocol:'https'
-// });
-
-// Mainnet History - https://eos.greymass.com:443
 const network = ScatterJS.Network.fromJson({
   blockchain:'eos',
-  chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-  host:'eos.greymass.com',
+  chainId:'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
+  host:'jungle2.cryptolions.io',
   port:443,
   protocol:'https'
 });
+
+// Mainnet History - https://eos.greymass.com:443
+// const network = ScatterJS.Network.fromJson({
+//   blockchain:'eos',
+//   chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+//   host:'eos.greymass.com',
+//   port:443,
+//   protocol:'https'
+// });
 const rpc = new JsonRpc(network.fullhost());
 
 export const loginHistoryExists = () => !!localStorage.getItem("lastLoginAt");
 const setLoginHistory    = () => localStorage.setItem("lastLoginAt", new Date().getTime());
 
 export const connect = appName => (new Promise((resolve, reject)=> {
-  ScatterJS.scatter.connect(appName, {network}).then(connected => {
+  ScatterJS.connect(appName, {network}).then(connected => {
     const
       onSuccess = () => {
-        scatter = ScatterJS.scatter;
+        scatter = ScatterJS;
         resolve();
       },
       onError = () => reject({
@@ -54,16 +54,15 @@ export const connect = appName => (new Promise((resolve, reject)=> {
 }));
 
 export const login = ()=> {
-  // Can have more required fields like firstname, lastname, address
-  const requiredFields = { accounts:[network] };
-  return scatter.getIdentity(requiredFields).then(() => {
-    userAccount = scatter.identity.accounts.find(x => x.blockchain === 'eos');  
-    
-    // Set expiration time for eos connection, can have more options
-    const eosOptions = { expireInSeconds: 60 };
-    userEosConnection = scatter.eos(network, Api, rpc, eosOptions);
-    setLoginHistory();
-    
+    return scatter.login().then(id => {
+      if(!id) return console.error('no identity');
+
+      setLoginHistory();
+      // Set expiration time for eos connection, can have more options
+      const eosOptions = { expireInSeconds: 60 };
+      userEosConnection = scatter.eos(network, Api, {rpc}, eosOptions);
+      userAccount = scatter.account('eos');
+
     return {
       name: userAccount.name,
       authority: userAccount.authority,
@@ -74,17 +73,33 @@ export const login = ()=> {
 
 export const logout = () => scatter.logout();
 
-export const sendTokens = ({toAccount, amount, memo}) => {
-  const transactionOptions = { authorization:[`${userAccount.name}@${userAccount.authority}`] };
-  return userEosConnection.transfer(
-    userAccount.name,
-    toAccount,
-    toEOSString(amount),
-    memo,
-    transactionOptions
-  ).then(trx => {
-    return trx.transaction_id;
+export const sendTokens = ({to, amount, memo}) => {
+  return userEosConnection.transact({
+    actions: [{
+        account: 'eosio.token',
+        name: 'transfer',
+        authorization: [{
+            actor: userAccount.name,
+            permission: userAccount.authority,
+        }],
+        data: {
+            from: userAccount.name,
+            to: to,
+            quantity: amount,
+            memo: memo,
+        },
+    }]
+  }, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+  }).then(res => {
+      console.log('sent: ', res)
+      return res
   });
+  // .catch(err => {
+  //     console.error('error: ', err)
+  //     return err
+  // });
 };
 
 export const getWallet = async () => {
