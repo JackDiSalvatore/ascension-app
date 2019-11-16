@@ -10,6 +10,11 @@ import {
   errorGettingWallet,
   loggedOut,
   tokenTransferred,
+  smartAccountCreated,
+  smartAccountRemoved,
+  smartAccountRemovedApprove,
+  smartAccountLeft,
+  activePermissionReverted,
   fetchWallet
 } from './scatter_actions';
 
@@ -19,7 +24,11 @@ import {
   loginHistoryExists,
   getWallet,
   logout,
-  sendTokens
+  sendTokens,
+  createSmartAccount,
+  removeSmartAccount,
+  removeSmartAccountApprove,
+  revertActivePermission
 } from "./scatter_helper";
 
 import {
@@ -108,6 +117,50 @@ function* transferTokens(action){
   }
 }
 
+function* createChestnut(action){
+  try {
+    yield call(createSmartAccount, action.payload);
+    yield put(smartAccountCreated());
+    notifySuccess('Successfully Created Smart Account', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
+function* removeChestnut(action){
+  try {
+    yield call(removeSmartAccount, action.payload);
+    yield put(smartAccountRemoved());
+    // notifySuccess('Successfully Removed Smart Account Pt1', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
+function* removeChestnutApprove(action){
+  try {
+    yield call(removeSmartAccountApprove, action.payload);
+    yield put(smartAccountRemovedApprove());
+    notifySuccess('Successfully Removed Smart Account Pt2', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
+function* revertChestnutActivePermission(action){
+  try {
+    yield call(revertActivePermission, action.payload);
+    yield put(activePermissionReverted());
+    notifySuccess('Successfully Reverted Active Permission pt4', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
 export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.CONNECT, connectWithScatter);
   yield takeLatest(SCATTER_ACTIONS.ATTEMPT_AUTO_LOGIN, attemptAutoLoginWithScatter);
@@ -115,4 +168,8 @@ export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.GET_WALLET, fetchUserWallet);
   yield takeLatest(SCATTER_ACTIONS.LOG_OUT, logOutUser);
   yield takeLatest(SCATTER_ACTIONS.SEND_TOKEN, transferTokens);
+  yield takeLatest(SCATTER_ACTIONS.CREATE_SMART_ACCOUNT, createChestnut);
+  yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT, removeChestnut);
+  yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVE, removeChestnutApprove);
+  yield takeLatest(SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, revertChestnutActivePermission);
 }

@@ -14,7 +14,13 @@ const INITIAL_STATE = {
   fetchingWallet  : false,
   walletError     : null,
 
-  sendingTokens   : false
+  sendingTokens   : false,
+
+  creatingSmartAccount : false,
+
+  removingSmartAccount : false,
+  removingSmartAccountApproved : false,
+  revertingActivePermission: false
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -49,6 +55,30 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case SCATTER_ACTIONS.SEND_TOKEN_SUCCESS:
       return {...state, sendingTokens: false};
+
+    case SCATTER_ACTIONS.CREATE_SMART_ACCOUNT:
+    return {...state, creatingSmartAccount: true};
+
+    case SCATTER_ACTIONS.CREATE_SMART_ACCOUNT_SUCCESS:
+      return {...state, creatingSmartAccount: false};
+
+    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT:
+    return {...state, removingSmartAccount: true};
+
+    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_SUCCESS:
+    return {...state, removingSmartAccount: false};
+
+    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVED:
+    return {...state, removingSmartAccountApproved: true};
+
+    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVED_SUCCESS:
+    return {...state, removingSmartAccountApproved: false};
+
+    case SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION:
+    return {...state, revertingActivePermission: true};
+
+    case SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION_SUCCESS:
+    return {...state, revertingActivePermission: false};
 
     default:
       return state;

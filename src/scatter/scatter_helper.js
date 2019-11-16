@@ -1,6 +1,6 @@
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
-import { Api, JsonRpc, JsSignatureProvider } from 'eosjs';
+import { Api, JsonRpc } from 'eosjs';
 
 import {
   parseEOS,
@@ -101,6 +101,433 @@ export const sendTokens = ({to, amount, memo}) => {
   //     return err
   // });
 };
+
+export const createSmartAccount = () => {
+  return userEosConnection.transact(
+    {
+      actions: [
+        // Create @chestnut permission for account
+        {
+          account: 'eosio',
+          name: 'updateauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            permission: 'chestnut',
+            parent: 'owner',
+            auth: {
+              threshold: 1,
+              keys: [
+                {
+                  key: userAccount.publicKey,
+                  weight: 1
+                }
+              ],
+              accounts: [],
+              waits: []
+            }
+          }
+        },
+        // Create the multisig active permission with `chestnutmsig@security` and `account@chestnut`
+        {
+          account: 'eosio',
+          name: 'updateauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            permission: "active",
+            parent: "owner",
+            auth: {
+              threshold: 2,
+              keys: [],
+              accounts: [
+                {
+                  permission: {
+                    actor: 'chestnutmsig',
+                    permission: 'security'
+                  },
+                  weight: 1
+                },
+                {
+                  permission: {
+                    actor: userAccount.name,
+                    permission: 'chestnut'
+                  },
+                  weight: 1
+                }
+              ],
+              waits: []
+            }
+          }
+        },
+        // # linkauth of the @chestnut permisssion to `eosio.msig`
+        {
+          account: 'eosio',
+          name: 'linkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'propose',
+            requirement: 'chestnut'
+          }
+        },
+        // # linkauth of the @chestnut permission to `eosio.msig` part 2
+        {
+          account: 'eosio',
+          name: 'linkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'approve',
+            requirement: 'chestnut'
+          }
+        },
+        // # linkauth of the @chestnut permission to `eosio.msig` part 3
+        {
+          account: 'eosio',
+          name: 'linkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'cancel',
+            requirement: 'chestnut'
+          }
+        },
+        // # linkauth of the @chestnut permission to the actions on our smart contract
+        {
+          account: 'eosio',
+          name: 'linkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'chestnutmsig',
+            type: '',
+            requirement: 'chestnut'
+          }
+        },
+        // # update @owner permission with no trusted recovery with friends
+        {
+          account: 'eosio',
+          name: 'updateauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            permission: 'owner',
+            parent: "",
+            auth: {
+              threshold: 2,
+              keys: [],
+              accounts: [
+                {
+                  permission: {
+                    actor: 'chestnutmsig',
+                    permission: 'security'
+                  },
+                  weight: 1
+                },
+                {
+                  permission: {
+                    actor: userAccount.name,
+                    permission: 'chestnut'
+                  },
+                  weight: 1
+                }
+              ],
+              waits: []
+            }
+          }
+        }
+      ]
+    },
+    {
+      blocksBehind: 3,
+      expireSeconds: 30,
+      broadcast: true
+    }
+  );
+}
+
+export async function removeSmartAccount ()  {
+  let actionData = {};
+
+  // CREATE ACTION TO PROPOSE
+  let actions = [
+    {
+      account: 'eosio',
+      name: 'updateauth',
+      authorization: [
+        { 
+          actor: userAccount.name,
+          permission: 'owner',
+        }
+      ], data: {
+        account: userAccount.name,
+        permission: 'owner',
+        parent: '',
+        auth: {
+          threshold: 1,
+          keys: [
+            {
+              key: userAccount.publicKey,
+              weight: 1
+            }
+          ],
+          accounts:[],
+          waits:[]
+        }
+      },
+    }
+  ]
+
+  let seActions = await userEosConnection.serializeActions(actions)
+  console.log(' 327 ')
+  console.log(seActions[0].data)
+
+  // BUILD THE MULTISIG PROPOSE TRANSACTION
+  actionData = {
+    proposer: userAccount.name,
+    proposal_name: 'backtonormal',
+    requested: [
+      {
+        actor: 'chestnutmsig',
+        permission: 'security'
+      },
+      {
+        actor: userAccount.name,
+        permission: 'chestnut'
+      }
+    ],
+    trx: {
+          expiration: '2020-04-22T16:39:15',
+          ref_block_num: 0,
+          ref_block_prefix: 0,
+          max_net_usage_words: 0,
+          max_cpu_usage_ms: 0,
+          delay_sec: 0,
+          context_free_actions: [],
+          actions: [
+            {
+              account: 'eosio',
+              name: 'updateauth',
+              authorization: [
+                {
+                  actor: userAccount.name,
+                  permission: 'owner'
+                }
+              ],
+              data: seActions[0].data
+            }
+          ],
+          transaction_extensions: []
+        }
+  };
+
+    // SEND THE MULTISIG PROPOSE
+  userEosConnection.transact({
+    actions: [{
+      account: 'eosio.msig',
+      name: 'propose',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: actionData,
+    }]
+  }, {
+    blocksBehind: 3,
+    expireSeconds: 30,
+    broadcast: true,
+    sign: true
+  });
+
+}
+
+export const removeSmartAccountApprove = () => {
+  // SEND MULTISIG APPROVE
+  return userEosConnection.transact({
+    actions: [{
+      account: 'eosio.msig',
+      name: 'approve',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: {
+        proposer: userAccount.name,
+        proposal_name: 'backtonormal',
+        level: {
+          actor:  userAccount.name,
+          permission: 'chestnut'
+        }
+      },
+    },
+    {
+      account: 'chestnutmsig',
+      name: 'leave',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: {
+        proposer: userAccount.name,
+        proposal_name: 'backtonormal'
+      },
+    }
+  ]
+  }, {
+    blocksBehind: 3,
+    expireSeconds: 30,
+    broadcast: true,
+    sign: true
+  });
+};
+
+export const revertActivePermission = () => {
+
+  return userEosConnection.transact(
+    {
+      actions: [
+        // cleos push action eosio updateauth
+        {
+          account: 'eosio',
+          name: 'updateauth',
+          authorization: [{
+            actor: userAccount.name,
+            permission: 'owner',
+          }],
+          data: {
+            account: userAccount.name,
+            permission: 'active',
+            parent: 'owner',
+            auth: {"keys":[{"key":userAccount.publicKey, "weight":1}],"threshold":1,"accounts":[],"waits":[]}
+          },
+        },
+        // cleos push action eosio unlinkauth '["daniel","chestnutmsig",""]' -p daniel@owner
+        {
+          account: 'eosio',
+          name: 'unlinkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'chestnutmsig',
+            type: '',
+          }
+        },
+        // cleos push action eosio unlinkauth '["daniel","eosio.msig","propose"]' -p daniel@owner
+        {
+          account: 'eosio',
+          name: 'unlinkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'propose',
+          }
+        },
+        // cleos push action eosio unlinkauth '["daniel","eosio.msig","approve"]' -p daniel@owner
+        {
+          account: 'eosio',
+          name: 'unlinkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'approve',
+          }
+        },
+        // cleos push action eosio unlinkauth '["daniel","eosio.msig","cancel"]' -p daniel@owner
+        {
+          account: 'eosio',
+          name: 'unlinkauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            code: 'eosio.msig',
+            type: 'cancel',
+          }
+        },
+        // cleos push action eosio deleteauth '{"account": "daniel", "permission": "chestnut"}' -p daniel@owner
+        {
+          account: 'eosio',
+          name: 'deleteauth',
+          authorization: [
+            {
+              actor: userAccount.name,
+              permission: userAccount.authority
+            }
+          ],
+          data: {
+            account: userAccount.name,
+            permission: 'chestnut',
+          }
+        },
+      ]
+    },
+    {
+      blocksBehind: 3,
+      expireSeconds: 30,
+      broadcast: true
+    }
+  );
+}
 
 export const getWallet = async () => {
   // get account details

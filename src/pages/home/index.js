@@ -11,7 +11,11 @@ import {
   requestLogin,
   fetchWallet,
   logout,
-  sendTokens
+  sendTokens,
+  createSmartAccount,
+  removeSmartAccount,
+  removeSmartAccountApprove,
+  revertActivePermission
 } from '../../scatter/scatter_actions';
 
 import { SetActionHistoryAction } from '../../actions/SetActionHistoryAction';
@@ -60,6 +64,22 @@ class Home extends Component{
   sendTokens = ({to, amount, memo}) => {
     // console.log(toAccount + ' ' + amount + ' ' + memo);
     this.props.sendTokens({to, amount, memo})
+  }
+
+  createSmartAccount = () => {
+    this.props.createSmartAccount()
+  }
+
+  removeSmartAccount = () => {
+    this.props.removeSmartAccount()
+  }
+
+  removeSmartAccountApprove = () => {
+    this.props.removeSmartAccountApprove()
+  }
+
+  revertActivePermission = () => {
+    this.props.revertActivePermission()
   }
 
   static getDerivedStateFromProps(props){
@@ -132,7 +152,7 @@ class Home extends Component{
 
   componentDidMount() {
     // Default Account
-    this.getAccountDetails('jackstarship');
+    this.getAccountDetails('jackchestnut');
   }
 
   render(){
@@ -142,7 +162,11 @@ class Home extends Component{
     const {
       loginUser,
       sendTokens,
-      logOutUser
+      logOutUser,
+      createSmartAccount,
+      removeSmartAccount,
+      removeSmartAccountApprove,
+      revertActivePermission
     } = this;
 
 
@@ -176,6 +200,10 @@ class Home extends Component{
               <EOSActions
                 userAccount={userAccount}
                 sendTokens={sendTokens}
+                createSmartAccount={createSmartAccount}
+                removeSmartAccount={removeSmartAccount}
+                removeSmartAccountApprove={removeSmartAccountApprove}
+                revertActivePermission={revertActivePermission}
               />
               :
               <div/>
@@ -210,6 +238,10 @@ const mapDispatchToProps = (dispatch) => {
     setFetchWallet: () => { dispatch(fetchWallet()) },
     // Transfer Tokens
     sendTokens: ({to, amount, memo}) => { dispatch(sendTokens({to, amount, memo})) },
+    createSmartAccount: () => { dispatch(createSmartAccount()) },
+    removeSmartAccount: () => { dispatch(removeSmartAccount()) },
+    removeSmartAccountApprove: () => { dispatch(removeSmartAccountApprove()) },
+    revertActivePermission: () => { dispatch(revertActivePermission()) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
     setEndpoint: (endpoint) => { dispatch(SetEndpointAction(endpoint)) },
