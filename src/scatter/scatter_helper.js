@@ -529,6 +529,121 @@ export const revertActivePermission = () => {
   );
 }
 
+export async function chestnutSendTokens ({to, amount, memo}) {
+  let proposal_name = 'txchestnut01'
+  let actionData = {};
+
+  // CREATE ACTION TO PROPOSE
+  let actions = [
+    {
+      account: 'eosio.token',
+      name: 'transfer',
+      authorization: [
+        { 
+          actor: userAccount.name,
+          permission: 'active',
+        }
+      ], data: {
+        from: userAccount.name,
+        to: to,
+        quantity: amount,
+        memo: memo
+      }
+    }
+  ]
+
+  let seActions = await userEosConnection.serializeActions(actions)
+  // console.log(seActions[0].data)
+
+  // BUILD THE MULTISIG PROPOSE TRANSACTION
+  actionData = {
+    proposer: userAccount.name,
+    proposal_name: proposal_name,
+    requested: [
+      {
+        actor: 'chestnutmsig',
+        permission: 'security'
+      },
+      {
+        actor: userAccount.name,
+        permission: 'chestnut'
+      }
+    ],
+    trx: {
+          expiration: '2020-04-22T16:39:15',
+          ref_block_num: 0,
+          ref_block_prefix: 0,
+          max_net_usage_words: 0,
+          max_cpu_usage_ms: 0,
+          delay_sec: 0,
+          context_free_actions: [],
+          actions: [
+            {
+              account: 'eosio.token',
+              name: 'transfer',
+              authorization: [
+                {
+                  actor: userAccount.name,
+                  permission: 'active'
+                }
+              ],
+              data: seActions[0].data
+            }
+          ],
+          transaction_extensions: []
+        }
+  };
+
+    // SEND THE MULTISIG
+  userEosConnection.transact({
+    actions: [{
+      account: 'eosio.msig',
+      name: 'propose',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: actionData,
+    },
+    // SEND APPROVE
+    {
+      account: 'eosio.msig',
+      name: 'approve',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: {
+        proposer: userAccount.name,
+        proposal_name: proposal_name,
+        level: {
+          actor: userAccount.name,
+          permission: 'chestnut'
+        }
+      },
+    },
+    // SEND TRANSFER
+    {
+      account: 'chestnutmsig',
+      name: 'transfer',
+      authorization: [{
+        actor: userAccount.name,
+        permission: 'chestnut',
+      }],
+      data: {
+        proposer: userAccount.name,
+        proposal_name: proposal_name
+      },
+    }
+  ]
+  }, {
+    blocksBehind: 3,
+    expireSeconds: 30,
+    broadcast: true,
+    sign: true
+  });
+};
+
 export const addtokenmax = ({ quantity, contract_account }) => {
   return userEosConnection.transact({
     actions: [{

@@ -16,6 +16,7 @@ import {
   removeSmartAccount,
   removeSmartAccountApprove,
   revertActivePermission,
+  chestnutSendTokens,
   addtokenmax
 } from '../../scatter/scatter_actions';
 
@@ -81,6 +82,10 @@ class Home extends Component{
 
   revertActivePermission = () => {
     this.props.revertActivePermission()
+  }
+
+  chestnutSendTokens = ({to, amount, memo}) => {
+    this.props.chestnutSendTokens({to, amount, memo})
   }
 
   addtokenmax = ({quantity, contract_account}) => {
@@ -172,6 +177,7 @@ class Home extends Component{
       removeSmartAccount,
       removeSmartAccountApprove,
       revertActivePermission,
+      chestnutSendTokens,
       addtokenmax
     } = this;
 
@@ -211,6 +217,7 @@ class Home extends Component{
                 removeSmartAccountApprove={removeSmartAccountApprove}
                 revertActivePermission={revertActivePermission}
                 addtokenmax={addtokenmax}
+                chestnutSendTokens={chestnutSendTokens}
               />
               :
               <div/>
@@ -251,6 +258,7 @@ const mapDispatchToProps = (dispatch) => {
     removeSmartAccountApprove: () => { dispatch(removeSmartAccountApprove()) },
     revertActivePermission: () => { dispatch(revertActivePermission()) },
     // Chestnut Actions
+    chestnutSendTokens: ({to, amount, memo}) => { dispatch(chestnutSendTokens({to, amount, memo})) },
     addtokenmax: ({quantity, contract_account}) => { dispatch(addtokenmax({quantity, contract_account})) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
