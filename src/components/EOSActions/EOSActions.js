@@ -22,7 +22,17 @@ const styles = theme => ({
 class AccountDetails extends Component {
 
     render() {
-        const { classes, userAccount, sendTokens, createSmartAccount, removeSmartAccount, removeSmartAccountApprove, revertActivePermission, chestnutSendTokens, addtokenmax } = this.props;
+        const {
+          classes,
+          userAccount,
+          sendTokens,
+          createSmartAccount,
+          removeSmartAccount,
+          removeSmartAccountApprove,
+          revertActivePermission,
+          chestnutSendTokens,
+          addtokenmax
+        } = this.props;
 
         return (
           <div className={classes.root}>
