@@ -8,6 +8,7 @@ import SmartAccount from './SmartAccount';
 import ChestnutTokenTransfer from './ChestnutTokenTransfer';
 import ChestnutAddWhitelist from './ChestnutAddWhitelist';
 import ChestnutAddTokenMax from './ChestnutAddTokenMax';
+import ChestnutAddXfrMax from './ChestnutAddXfrMax';
 
 const styles = theme => ({
   root: {
@@ -33,7 +34,8 @@ class AccountDetails extends Component {
           revertActivePermission,
           chestnutSendTokens,
           addwhitelist,
-          addtokenmax
+          addtokenmax,
+          addxfrmax,
         } = this.props;
 
         return (
@@ -100,6 +102,12 @@ class AccountDetails extends Component {
               <Grid item>
                 <ChestnutAddTokenMax
                   addtokenmax={addtokenmax}
+                />
+              </Grid>
+
+              <Grid item>
+                <ChestnutAddXfrMax
+                  addxfrmax={addxfrmax}
                 />
               </Grid>
 

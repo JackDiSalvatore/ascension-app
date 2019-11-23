@@ -691,6 +691,31 @@ export const addtokenmax = ({ quantity, contract_account }) => {
   });
 }
 
+export const addxfrmax = ({ max_tx, contract_account, minutes }) => {
+  return userEosConnection.transact({
+    actions: [{
+        account: 'chestnutmsig',
+        name: 'addxfrmax',
+        authorization: [{
+            actor: userAccount.name,
+            permission: userAccount.authority,
+        }],
+        data: {
+            user: userAccount.name,
+            max_tx: max_tx,
+            contract_account: contract_account,
+            minutes: minutes,
+        },
+    }]
+  }, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+  }).then(res => {
+      console.log('sent: ', res)
+      return res
+  });
+}
+
 export const getWallet = async () => {
   // get account details
   const userDetails = await rpc.get_account(userAccount.name);

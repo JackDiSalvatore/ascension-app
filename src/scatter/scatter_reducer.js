@@ -26,6 +26,7 @@ const INITIAL_STATE = {
 
   addingWhitelist: false,
   addingTokenMax: false,
+  addingXfrMax: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -102,6 +103,12 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case SCATTER_ACTIONS.ADD_TOKEN_MAX_SUCCESS:
     return {...state, addingTokenMax: false};
+
+    case SCATTER_ACTIONS.CHESTNUT_ADD_XFR_MAX:
+    return {...state, addingXfrMax: true};
+
+    case SCATTER_ACTIONS.CHESTNUT_ADD_XFR_MAX_SUCCESS:
+    return {...state, addingXfrMax: false};
 
     default:
       return state;

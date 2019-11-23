@@ -40,6 +40,9 @@ export const SCATTER_ACTIONS = {
   ADD_TOKEN_MAX: 'SCATTER/ADD_TOKEN_MAX',
   ADD_TOKEN_MAX_SUCCESS: 'SCATTER/ADD_TOKEN_MAX_SUCCESS',
 
+  CHESTNUT_ADD_XFR_MAX: 'SCATTER/CHESTNUT_ADD_XFR_MAX',
+  CHESTNUT_ADD_XFR_MAX_SUCCESS: 'SCATTER/CHESTNUT_ADD_XFR_MAX_SUCCESS',
+
   AUTH_ERROR: 'SCATTER/ERRORS/AUTH_ERROR',
   SEND_TOKEN_ERROR: 'SCATTER/ERRORS/SEND_TOKEN_ERROR',
 };
@@ -81,6 +84,9 @@ export const whitelistAdded   = () => ({type: SCATTER_ACTIONS.CHESTNUT_ADD_WHITE
 
 export const addtokenmax    = payload => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX, payload});
 export const tokenMaxAdded   = () => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX_SUCCESS});
+
+export const addxfrmax    = payload => ({type: SCATTER_ACTIONS.CHESTNUT_ADD_XFR_MAX, payload});
+export const xfrMaxAdded   = () => ({type: SCATTER_ACTIONS.CHESTNUT_ADD_XFR_MAX_SUCCESS});
 
 export const chestnutSendTokens    = payload => ({type: SCATTER_ACTIONS.CHESTNUT_SEND_TOKENS, payload});
 export const chestnutTokenTransferred   = () => ({type: SCATTER_ACTIONS.CHESTNUT_SEND_TOKENS_SUCCESS});

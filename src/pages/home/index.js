@@ -18,7 +18,8 @@ import {
   revertActivePermission,
   chestnutSendTokens,
   addwhitelist,
-  addtokenmax
+  addtokenmax,
+  addxfrmax,
 } from '../../scatter/scatter_actions';
 
 import { SetActionHistoryAction } from '../../actions/SetActionHistoryAction';
@@ -95,6 +96,10 @@ class Home extends Component{
 
   addtokenmax = ({quantity, contract_account}) => {
     this.props.addtokenmax({quantity, contract_account})
+  }
+
+  addxfrmax = ({max_tx, contract_account, minutes}) => {
+    this.props.addxfrmax({max_tx, contract_account, minutes})
   }
 
   static getDerivedStateFromProps(props){
@@ -184,7 +189,8 @@ class Home extends Component{
       revertActivePermission,
       chestnutSendTokens,
       addwhitelist,
-      addtokenmax
+      addtokenmax,
+      addxfrmax,
     } = this;
 
 
@@ -224,6 +230,7 @@ class Home extends Component{
                 revertActivePermission={revertActivePermission}
                 addwhitelist={addwhitelist}
                 addtokenmax={addtokenmax}
+                addxfrmax={addxfrmax}
                 chestnutSendTokens={chestnutSendTokens}
               />
               :
@@ -268,6 +275,7 @@ const mapDispatchToProps = (dispatch) => {
     chestnutSendTokens: ({to, amount, memo}) => { dispatch(chestnutSendTokens({to, amount, memo})) },
     addwhitelist: ({account_to_add}) => { dispatch(addwhitelist({account_to_add})) },
     addtokenmax: ({quantity, contract_account}) => { dispatch(addtokenmax({quantity, contract_account})) },
+    addxfrmax: ({max_tx, contract_account, minutes}) => { dispatch(addxfrmax({max_tx, contract_account, minutes})) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
     setEndpoint: (endpoint) => { dispatch(SetEndpointAction(endpoint)) },

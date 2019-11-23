@@ -18,6 +18,7 @@ import {
   chestnutTokenTransferred,
   whitelistAdded,
   tokenMaxAdded,
+  xfrMaxAdded,
   fetchWallet
 } from './scatter_actions';
 
@@ -35,6 +36,7 @@ import {
   chestnutSendTokens,
   addwhitelist,
   addtokenmax,
+  addxfrmax
 } from "./scatter_helper";
 
 import {
@@ -200,6 +202,17 @@ function* chestnutAddTokenMax(action){
   }
 }
 
+function* chestnutAddXfrMax(action){
+  try {
+    yield call(addxfrmax, action.payload);
+    yield put(xfrMaxAdded());
+    notifySuccess('Successfully Added Maximum Transfer Time Limit', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
 export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.CONNECT, connectWithScatter);
   yield takeLatest(SCATTER_ACTIONS.ATTEMPT_AUTO_LOGIN, attemptAutoLoginWithScatter);
@@ -213,5 +226,6 @@ export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, revertChestnutActivePermission);
   yield takeLatest(SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST, chestnutAddWhitelist);
   yield takeLatest(SCATTER_ACTIONS.ADD_TOKEN_MAX, chestnutAddTokenMax);
+  yield takeLatest(SCATTER_ACTIONS.CHESTNUT_ADD_XFR_MAX, chestnutAddXfrMax);
   yield takeLatest(SCATTER_ACTIONS.CHESTNUT_SEND_TOKENS, chestnutTransferTokens);
 }
