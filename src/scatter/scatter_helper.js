@@ -530,7 +530,7 @@ export const revertActivePermission = () => {
 }
 
 export async function chestnutSendTokens ({to, amount, memo}) {
-  let proposal_name = 'txchestnut01'
+  let proposal_name = 'txchestnut1'
   let actionData = {};
 
   // CREATE ACTION TO PROPOSE
