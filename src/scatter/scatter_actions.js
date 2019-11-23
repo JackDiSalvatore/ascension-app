@@ -34,6 +34,9 @@ export const SCATTER_ACTIONS = {
   CHESTNUT_SEND_TOKENS: 'SCATTER/CHESTNUT_SEND_TOKENS',
   CHESTNUT_SEND_TOKENS_SUCCESS: 'SCATTER/CHESTNUT_SEND_TOKENS_SUCCESS',
 
+  CHESTNUT_ADD_WHITELIST: 'SCATTER/CHESTNUT_ADD_WHITELIST',
+  CHESTNUT_ADD_WHITELIST_SUCCESS: 'SCATTER/CHESTNUT_ADD_WHITELIST_SUCCESS',
+
   ADD_TOKEN_MAX: 'SCATTER/ADD_TOKEN_MAX',
   ADD_TOKEN_MAX_SUCCESS: 'SCATTER/ADD_TOKEN_MAX_SUCCESS',
 
@@ -72,6 +75,9 @@ export const smartAccountRemovedApprove   = () => ({type: SCATTER_ACTIONS.REMOVE
 
 export const revertActivePermission    = payload => ({type: SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, payload});
 export const activePermissionReverted   = () => ({type: SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION_SUCCESS});
+
+export const addwhitelist    = payload => ({type: SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST, payload});
+export const whitelistAdded   = () => ({type: SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST_SUCCESS});
 
 export const addtokenmax    = payload => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX, payload});
 export const tokenMaxAdded   = () => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX_SUCCESS});

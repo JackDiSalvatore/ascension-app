@@ -16,6 +16,7 @@ import {
   smartAccountLeft,
   activePermissionReverted,
   chestnutTokenTransferred,
+  whitelistAdded,
   tokenMaxAdded,
   fetchWallet
 } from './scatter_actions';
@@ -32,6 +33,7 @@ import {
   removeSmartAccountApprove,
   revertActivePermission,
   chestnutSendTokens,
+  addwhitelist,
   addtokenmax,
 } from "./scatter_helper";
 
@@ -176,6 +178,17 @@ function* chestnutTransferTokens(action){
   }
 }
 
+function* chestnutAddWhitelist(action){
+  try {
+    yield call(addwhitelist, action.payload);
+    yield put(whitelistAdded());
+    notifySuccess('Successfully Added To Whitelist', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
 function* chestnutAddTokenMax(action){
   try {
     yield call(addtokenmax, action.payload);
@@ -198,6 +211,7 @@ export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT, removeChestnut);
   yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVE, removeChestnutApprove);
   yield takeLatest(SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, revertChestnutActivePermission);
+  yield takeLatest(SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST, chestnutAddWhitelist);
   yield takeLatest(SCATTER_ACTIONS.ADD_TOKEN_MAX, chestnutAddTokenMax);
   yield takeLatest(SCATTER_ACTIONS.CHESTNUT_SEND_TOKENS, chestnutTransferTokens);
 }

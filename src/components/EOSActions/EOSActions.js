@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import TokenTransfer from './TokenTransfer';
 import SmartAccount from './SmartAccount';
 import ChestnutTokenTransfer from './ChestnutTokenTransfer';
+import ChestnutAddWhitelist from './ChestnutAddWhitelist';
 import ChestnutAddTokenMax from './ChestnutAddTokenMax';
 
 const styles = theme => ({
@@ -31,6 +32,7 @@ class AccountDetails extends Component {
           removeSmartAccountApprove,
           revertActivePermission,
           chestnutSendTokens,
+          addwhitelist,
           addtokenmax
         } = this.props;
 
@@ -86,6 +88,12 @@ class AccountDetails extends Component {
               <Grid item>
                 <ChestnutTokenTransfer
                   chestnutSendTokens={chestnutSendTokens}
+                />
+              </Grid>
+
+              <Grid item>
+                <ChestnutAddWhitelist
+                  addwhitelist={addwhitelist}
                 />
               </Grid>
 

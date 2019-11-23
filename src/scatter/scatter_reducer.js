@@ -24,6 +24,7 @@ const INITIAL_STATE = {
 
   chestnutSendingTokens: false,
 
+  addingWhitelist: false,
   addingTokenMax: false,
 };
 
@@ -89,6 +90,12 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case SCATTER_ACTIONS.CHESTNUT_SEND_TOKENS_SUCCESS:
     return {...state, chestnutSendingTokens: false};
+
+    case SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST:
+    return {...state, addingWhitelist: true};
+
+    case SCATTER_ACTIONS.CHESTNUT_ADD_WHITELIST_SUCCESS:
+    return {...state, addingWhitelist: false};
 
     case SCATTER_ACTIONS.ADD_TOKEN_MAX:
     return {...state, addingTokenMax: true};

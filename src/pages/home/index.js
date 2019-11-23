@@ -17,6 +17,7 @@ import {
   removeSmartAccountApprove,
   revertActivePermission,
   chestnutSendTokens,
+  addwhitelist,
   addtokenmax
 } from '../../scatter/scatter_actions';
 
@@ -86,6 +87,10 @@ class Home extends Component{
 
   chestnutSendTokens = ({to, amount, memo}) => {
     this.props.chestnutSendTokens({to, amount, memo})
+  }
+
+  addwhitelist = ({ account_to_add }) => {
+    this.props.addwhitelist({account_to_add})
   }
 
   addtokenmax = ({quantity, contract_account}) => {
@@ -178,6 +183,7 @@ class Home extends Component{
       removeSmartAccountApprove,
       revertActivePermission,
       chestnutSendTokens,
+      addwhitelist,
       addtokenmax
     } = this;
 
@@ -216,6 +222,7 @@ class Home extends Component{
                 removeSmartAccount={removeSmartAccount}
                 removeSmartAccountApprove={removeSmartAccountApprove}
                 revertActivePermission={revertActivePermission}
+                addwhitelist={addwhitelist}
                 addtokenmax={addtokenmax}
                 chestnutSendTokens={chestnutSendTokens}
               />
@@ -259,6 +266,7 @@ const mapDispatchToProps = (dispatch) => {
     revertActivePermission: () => { dispatch(revertActivePermission()) },
     // Chestnut Actions
     chestnutSendTokens: ({to, amount, memo}) => { dispatch(chestnutSendTokens({to, amount, memo})) },
+    addwhitelist: ({account_to_add}) => { dispatch(addwhitelist({account_to_add})) },
     addtokenmax: ({quantity, contract_account}) => { dispatch(addtokenmax({quantity, contract_account})) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },

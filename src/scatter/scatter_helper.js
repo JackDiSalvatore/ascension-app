@@ -644,6 +644,29 @@ export async function chestnutSendTokens ({to, amount, memo}) {
   });
 };
 
+export const addwhitelist = ({ account_to_add }) => {
+  return userEosConnection.transact({
+    actions: [{
+        account: 'chestnutmsig',
+        name: 'addwhitelist',
+        authorization: [{
+            actor: userAccount.name,
+            permission: userAccount.authority,
+        }],
+        data: {
+            user: userAccount.name,
+            account_to_add: account_to_add,
+        },
+    }]
+  }, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+  }).then(res => {
+      console.log('sent: ', res)
+      return res
+  });
+}
+
 export const addtokenmax = ({ quantity, contract_account }) => {
   return userEosConnection.transact({
     actions: [{
