@@ -30,7 +30,6 @@ class AccountDetails extends Component {
           sendTokens,
           createSmartAccount,
           removeSmartAccount,
-          removeSmartAccountApprove,
           revertActivePermission,
           chestnutSendTokens,
           addwhitelist,
@@ -71,7 +70,6 @@ class AccountDetails extends Component {
                   userAccount={userAccount}
                   createSmartAccount={createSmartAccount}
                   removeSmartAccount={removeSmartAccount}
-                  removeSmartAccountApprove={removeSmartAccountApprove}
                   revertActivePermission={revertActivePermission}
                 />
               </Grid>

@@ -14,7 +14,6 @@ import {
   sendTokens,
   createSmartAccount,
   removeSmartAccount,
-  removeSmartAccountApprove,
   revertActivePermission,
   chestnutSendTokens,
   addwhitelist,
@@ -76,10 +75,6 @@ class Home extends Component{
 
   removeSmartAccount = () => {
     this.props.removeSmartAccount()
-  }
-
-  removeSmartAccountApprove = () => {
-    this.props.removeSmartAccountApprove()
   }
 
   revertActivePermission = () => {
@@ -185,7 +180,6 @@ class Home extends Component{
       logOutUser,
       createSmartAccount,
       removeSmartAccount,
-      removeSmartAccountApprove,
       revertActivePermission,
       chestnutSendTokens,
       addwhitelist,
@@ -226,7 +220,6 @@ class Home extends Component{
                 sendTokens={sendTokens}
                 createSmartAccount={createSmartAccount}
                 removeSmartAccount={removeSmartAccount}
-                removeSmartAccountApprove={removeSmartAccountApprove}
                 revertActivePermission={revertActivePermission}
                 addwhitelist={addwhitelist}
                 addtokenmax={addtokenmax}
@@ -269,7 +262,6 @@ const mapDispatchToProps = (dispatch) => {
     // Chestnut Creation
     createSmartAccount: () => { dispatch(createSmartAccount()) },
     removeSmartAccount: () => { dispatch(removeSmartAccount()) },
-    removeSmartAccountApprove: () => { dispatch(removeSmartAccountApprove()) },
     revertActivePermission: () => { dispatch(revertActivePermission()) },
     // Chestnut Actions
     chestnutSendTokens: ({to, amount, memo}) => { dispatch(chestnutSendTokens({to, amount, memo})) },

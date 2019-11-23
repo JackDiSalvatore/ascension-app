@@ -19,7 +19,6 @@ const INITIAL_STATE = {
   creatingSmartAccount : false,
 
   removingSmartAccount : false,
-  removingSmartAccountApproved : false,
   revertingActivePermission: false,
 
   chestnutSendingTokens: false,
@@ -73,12 +72,6 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_SUCCESS:
     return {...state, removingSmartAccount: false};
-
-    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVED:
-    return {...state, removingSmartAccountApproved: true};
-
-    case SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVED_SUCCESS:
-    return {...state, removingSmartAccountApproved: false};
 
     case SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION:
     return {...state, revertingActivePermission: true};

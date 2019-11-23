@@ -53,7 +53,6 @@ class SmartAccount extends Component {
 
       this.create = this.create.bind(this);
       this.proposeRemove = this.proposeRemove.bind(this);
-      this.approveRemove = this.approveRemove.bind(this);
       this.revertPermision = this.revertPermision.bind(this);
     }
 
@@ -65,11 +64,6 @@ class SmartAccount extends Component {
     proposeRemove = event => {
       event.preventDefault();
       this.props.removeSmartAccount();
-    };
-
-    approveRemove = event => {
-      event.preventDefault();
-      this.props.removeSmartAccountApprove();
     };
 
     revertPermision = event => {
@@ -110,19 +104,7 @@ class SmartAccount extends Component {
                 type="submit"
                 onClick={this.proposeRemove}
               >
-                Remove Smart Account Pt1
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button 
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                type="submit"
-                onClick={this.approveRemove}
-              >
-                Remove Smart Account Pt2
+                Remove Smart Account
               </Button>
             </Grid>
 
@@ -134,7 +116,7 @@ class SmartAccount extends Component {
                 type="submit"
                 onClick={this.revertPermision}
               >
-                Remove Smart Account Pt3
+                Remove Chestnut Permission
               </Button>
             </Grid>
 

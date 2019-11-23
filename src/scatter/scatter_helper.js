@@ -370,20 +370,8 @@ export async function removeSmartAccount ()  {
         permission: 'chestnut',
       }],
       data: actionData,
-    }]
-  }, {
-    blocksBehind: 3,
-    expireSeconds: 30,
-    broadcast: true,
-    sign: true
-  });
-
-}
-
-export const removeSmartAccountApprove = () => {
-  // SEND MULTISIG APPROVE
-  return userEosConnection.transact({
-    actions: [{
+    },
+    {
       account: 'eosio.msig',
       name: 'approve',
       authorization: [{
@@ -418,7 +406,8 @@ export const removeSmartAccountApprove = () => {
     broadcast: true,
     sign: true
   });
-};
+
+}
 
 export const revertActivePermission = () => {
 
