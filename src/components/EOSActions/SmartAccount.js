@@ -110,7 +110,7 @@ class SmartAccount extends Component {
                 type="submit"
                 onClick={this.proposeRemove}
               >
-                Remove Smart Account
+                Remove Smart Account Pt1
               </Button>
             </Grid>
 
