@@ -31,6 +31,9 @@ export const SCATTER_ACTIONS = {
   REVERT_ACTIVE_PERMISSION: 'SCATTER/REVERT_ACTIVE_PERMISSION',
   REVERT_ACTIVE_PERMISSION_SUCCESS: 'SCATTER/REVERT_ACTIVE_PERMISSION_SUCCESS',
 
+  ADD_TOKEN_MAX: 'SCATTER/ADD_TOKEN_MAX',
+  ADD_TOKEN_MAX_SUCCESS: 'SCATTER/ADD_TOKEN_MAX_SUCCESS',
+
   AUTH_ERROR: 'SCATTER/ERRORS/AUTH_ERROR',
   SEND_TOKEN_ERROR: 'SCATTER/ERRORS/SEND_TOKEN_ERROR',
 };
@@ -66,3 +69,6 @@ export const smartAccountRemovedApprove   = () => ({type: SCATTER_ACTIONS.REMOVE
 
 export const revertActivePermission    = payload => ({type: SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, payload});
 export const activePermissionReverted   = () => ({type: SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION_SUCCESS});
+
+export const addtokenmax    = payload => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX, payload});
+export const tokenMaxAdded   = () => ({type: SCATTER_ACTIONS.ADD_TOKEN_MAX_SUCCESS});

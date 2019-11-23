@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import TokenTransfer from './TokenTransfer';
 import SmartAccount from './SmartAccount';
+import ChestnutAddTokenMax from './ChestnutAddTokenMax';
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
 class AccountDetails extends Component {
 
     render() {
-        const { classes, userAccount, sendTokens, createSmartAccount, removeSmartAccount, removeSmartAccountApprove, revertActivePermission } = this.props;
+        const { classes, userAccount, sendTokens, createSmartAccount, removeSmartAccount, removeSmartAccountApprove, revertActivePermission, addtokenmax } = this.props;
 
         return (
           <div className={classes.root}>
@@ -57,6 +58,12 @@ class AccountDetails extends Component {
                   removeSmartAccount={removeSmartAccount}
                   removeSmartAccountApprove={removeSmartAccountApprove}
                   revertActivePermission={revertActivePermission}
+                />
+              </Grid>
+
+              <Grid item>
+                <ChestnutAddTokenMax
+                  addtokenmax={addtokenmax}
                 />
               </Grid>
 

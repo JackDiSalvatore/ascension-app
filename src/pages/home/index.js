@@ -15,7 +15,8 @@ import {
   createSmartAccount,
   removeSmartAccount,
   removeSmartAccountApprove,
-  revertActivePermission
+  revertActivePermission,
+  addtokenmax
 } from '../../scatter/scatter_actions';
 
 import { SetActionHistoryAction } from '../../actions/SetActionHistoryAction';
@@ -80,6 +81,10 @@ class Home extends Component{
 
   revertActivePermission = () => {
     this.props.revertActivePermission()
+  }
+
+  addtokenmax = ({quantity, contract_account}) => {
+    this.props.addtokenmax({quantity, contract_account})
   }
 
   static getDerivedStateFromProps(props){
@@ -166,7 +171,8 @@ class Home extends Component{
       createSmartAccount,
       removeSmartAccount,
       removeSmartAccountApprove,
-      revertActivePermission
+      revertActivePermission,
+      addtokenmax
     } = this;
 
 
@@ -204,6 +210,7 @@ class Home extends Component{
                 removeSmartAccount={removeSmartAccount}
                 removeSmartAccountApprove={removeSmartAccountApprove}
                 revertActivePermission={revertActivePermission}
+                addtokenmax={addtokenmax}
               />
               :
               <div/>
@@ -238,10 +245,13 @@ const mapDispatchToProps = (dispatch) => {
     setFetchWallet: () => { dispatch(fetchWallet()) },
     // Transfer Tokens
     sendTokens: ({to, amount, memo}) => { dispatch(sendTokens({to, amount, memo})) },
+    // Chestnut Creation
     createSmartAccount: () => { dispatch(createSmartAccount()) },
     removeSmartAccount: () => { dispatch(removeSmartAccount()) },
     removeSmartAccountApprove: () => { dispatch(removeSmartAccountApprove()) },
     revertActivePermission: () => { dispatch(revertActivePermission()) },
+    // Chestnut Actions
+    addtokenmax: ({quantity, contract_account}) => { dispatch(addtokenmax({quantity, contract_account})) },
     // Account Search
     setActionHistory: (actionHistory) => { dispatch(SetActionHistoryAction(actionHistory)) },
     setEndpoint: (endpoint) => { dispatch(SetEndpointAction(endpoint)) },

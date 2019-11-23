@@ -529,6 +529,30 @@ export const revertActivePermission = () => {
   );
 }
 
+export const addtokenmax = ({ quantity, contract_account }) => {
+  return userEosConnection.transact({
+    actions: [{
+        account: 'chestnutmsig',
+        name: 'addtokenmax',
+        authorization: [{
+            actor: userAccount.name,
+            permission: userAccount.authority,
+        }],
+        data: {
+            user: userAccount.name,
+            quantity: quantity,
+            contract_account: contract_account,
+        },
+    }]
+  }, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+  }).then(res => {
+      console.log('sent: ', res)
+      return res
+  });
+}
+
 export const getWallet = async () => {
   // get account details
   const userDetails = await rpc.get_account(userAccount.name);

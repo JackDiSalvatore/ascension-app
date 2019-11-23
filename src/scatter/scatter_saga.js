@@ -15,6 +15,7 @@ import {
   smartAccountRemovedApprove,
   smartAccountLeft,
   activePermissionReverted,
+  tokenMaxAdded,
   fetchWallet
 } from './scatter_actions';
 
@@ -28,7 +29,8 @@ import {
   createSmartAccount,
   removeSmartAccount,
   removeSmartAccountApprove,
-  revertActivePermission
+  revertActivePermission,
+  addtokenmax,
 } from "./scatter_helper";
 
 import {
@@ -161,6 +163,17 @@ function* revertChestnutActivePermission(action){
   }
 }
 
+function* chestnutAddTokenMax(action){
+  try {
+    yield call(addtokenmax, action.payload);
+    yield put(tokenMaxAdded());
+    notifySuccess('Successfully Added Maximum Token Transfer Limit', 3);
+    yield put(fetchWallet());
+  } catch (e) {
+    notifyError(e.message, 5);
+  }
+}
+
 export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.CONNECT, connectWithScatter);
   yield takeLatest(SCATTER_ACTIONS.ATTEMPT_AUTO_LOGIN, attemptAutoLoginWithScatter);
@@ -172,4 +185,5 @@ export default function*  missionsSagas(){
   yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT, removeChestnut);
   yield takeLatest(SCATTER_ACTIONS.REMOVE_SMART_ACCOUNT_APPROVE, removeChestnutApprove);
   yield takeLatest(SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION, revertChestnutActivePermission);
+  yield takeLatest(SCATTER_ACTIONS.ADD_TOKEN_MAX, chestnutAddTokenMax);
 }

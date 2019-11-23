@@ -20,7 +20,9 @@ const INITIAL_STATE = {
 
   removingSmartAccount : false,
   removingSmartAccountApproved : false,
-  revertingActivePermission: false
+  revertingActivePermission: false,
+
+  addingTokenMax: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -79,6 +81,12 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case SCATTER_ACTIONS.REVERT_ACTIVE_PERMISSION_SUCCESS:
     return {...state, revertingActivePermission: false};
+
+    case SCATTER_ACTIONS.ADD_TOKEN_MAX:
+    return {...state, addingTokenMax: true};
+
+    case SCATTER_ACTIONS.ADD_TOKEN_MAX_SUCCESS:
+    return {...state, addingTokenMax: false};
 
     default:
       return state;
