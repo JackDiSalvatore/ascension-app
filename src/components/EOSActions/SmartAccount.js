@@ -30,6 +30,21 @@ const styles = theme => ({
       borderRadius: '10px', 
     },
   },
+  buttonNegative: {
+    marginRight: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
+    letterSpacing: '0.2em',
+    // paddingLeft: '2.5em',
+    // paddingRight: '2.5em',
+    borderRadius: '10px',
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.10),
+      color: theme.palette.secondary.main,
+      border: '1px solid ' + theme.palette.secondary.main,
+      borderRadius: '10px', 
+    },
+  },
   textStyle: {
     color: theme.palette.primary.contrastText,
   },
@@ -78,7 +93,7 @@ class SmartAccount extends Component {
           <Grid
             container
             spacing={1}
-            direction="column"
+            direction="row"
             alignItems="flex-start"
             justify="center"
             className={classes.root}
@@ -100,7 +115,7 @@ class SmartAccount extends Component {
               <Button 
                 variant="contained"
                 color="secondary"
-                className={classes.button}
+                className={classes.buttonNegative}
                 type="submit"
                 onClick={this.proposeRemove}
               >
@@ -112,7 +127,7 @@ class SmartAccount extends Component {
               <Button 
                 variant="contained"
                 color="secondary"
-                className={classes.button}
+                className={classes.buttonNegative}
                 type="submit"
                 onClick={this.revertPermision}
               >
