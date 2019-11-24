@@ -113,7 +113,7 @@ class ChestnutAddWhitelist extends Component {
                     <input
                       name="account_to_add"
                       type="text"
-                      placeholder="account_to_add:"
+                      placeholder="account:"
                       className={classes.input}
                       value={this.state.account_to_add}
                       onChange={this.handleChange}
