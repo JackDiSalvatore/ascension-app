@@ -47,7 +47,7 @@ class AccountDetails extends Component {
           <div className={classes.root}>
             <Grid
               container
-              spacing={1}
+              spacing={0}
               direction="column"
               alignItems="stretch"
               justify="center"
@@ -84,21 +84,35 @@ class AccountDetails extends Component {
               </Grid>
 
               <Grid item>
-                <ChestnutAddWhitelist
-                  addwhitelist={addwhitelist}
-                />
+                <hr className={classes.hrStyle}/>
               </Grid>
 
               <Grid item>
-                <ChestnutAddTokenMax
-                  addtokenmax={addtokenmax}
-                />
-              </Grid>
+                <Grid
+                container
+                spacing={0}
+                direction="row"
+                alignItems="center"
+                justify="space-between"
+                >
+                  <Grid item>
+                    <ChestnutAddWhitelist
+                      addwhitelist={addwhitelist}
+                    />
+                  </Grid>
 
-              <Grid item>
-                <ChestnutAddXfrMax
-                  addxfrmax={addxfrmax}
-                />
+                  <Grid item>
+                    <ChestnutAddTokenMax
+                      addtokenmax={addtokenmax}
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <ChestnutAddXfrMax
+                      addxfrmax={addxfrmax}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
 
             </Grid>
