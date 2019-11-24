@@ -18,6 +18,12 @@ const styles = theme => ({
   textStyle: {
     color: theme.palette.primary.contrastText,
   },
+  hrStyle: {
+    backgroundColor: 'rgb(27,27,29)',
+    border: '1px solid #8DFFA9',
+    color: '#8DFFA9',
+    width: '100%'
+  }
 });
   
 
@@ -55,14 +61,7 @@ class AccountDetails extends Component {
               </Grid>
 
               <Grid item>
-                <hr
-                  style={{
-                    backgroundColor: 'rgb(27,27,29)',
-                    border: '1px solid #8DFFA9',
-                    color: '#8DFFA9',
-                    width: '100%'
-                  }}
-                />
+                <hr className={classes.hrStyle}/>
               </Grid>
 
               <Grid item>
@@ -75,14 +74,7 @@ class AccountDetails extends Component {
               </Grid>
 
               <Grid item>
-                <hr
-                  style={{
-                    backgroundColor: 'rgb(27,27,29)',
-                    border: '1px solid #8DFFA9',
-                    color: '#8DFFA9',
-                    width: '100%'
-                  }}
-                />
+                <hr className={classes.hrStyle}/>
               </Grid>
 
               <Grid item>
