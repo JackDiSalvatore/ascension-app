@@ -66,7 +66,7 @@ class ChestnutAddXfrMax extends Component {
       this.state = {
         max_tx: '',
         contract_account: 'eosio.token',
-        minutes: null
+        minutes: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
