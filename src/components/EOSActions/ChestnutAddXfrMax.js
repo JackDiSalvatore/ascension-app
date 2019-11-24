@@ -66,7 +66,7 @@ class ChestnutAddXfrMax extends Component {
       this.state = {
         max_tx: '',
         contract_account: 'eosio.token',
-        minutes: 0
+        minutes: null
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -97,7 +97,7 @@ class ChestnutAddXfrMax extends Component {
           >
             <Grid item>
               <Typography className={classes.textStyle} variant="h6">
-                Add Maximum Transfer Duration Limit
+                Add Spending Limit
               </Typography>
             </Grid>
 
