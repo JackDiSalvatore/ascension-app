@@ -96,7 +96,7 @@ class ChestnutAddTokenMax extends Component {
           >
             <Grid item>
               <Typography className={classes.textStyle} variant="h6">
-                Add Maximum Single Transfer Limit
+                Add Transfer Limit
               </Typography>
             </Grid>
 
