@@ -90,52 +90,64 @@ class SmartAccount extends Component {
         const { classes } = this.props;
 
         return (
-          <Grid
-            container
-            spacing={1}
-            direction="row"
-            alignItems="flex-start"
-            justify="center"
-            className={classes.root}
-          >
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="flex-start"
+          justify="center"
+          className={classes.root}
+        >
+          <Grid item>
 
-            <Grid item>
-              <Button 
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                type="submit"
-                onClick={this.create}
-              >
-                Create Smart Account
-              </Button>
-            </Grid>
+            <Grid
+              container
+              spacing={1}
+              direction="row"
+              alignItems="flex-start"
+              justify="center"
+              className={classes.root}
+            >
 
-            <Grid item>
-              <Button 
-                variant="contained"
-                color="secondary"
-                className={classes.buttonNegative}
-                type="submit"
-                onClick={this.proposeRemove}
-              >
-                Remove Smart Account
-              </Button>
-            </Grid>
+              <Grid item>
+                <Button 
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  type="submit"
+                  onClick={this.create}
+                >
+                  Create Smart Account
+                </Button>
+              </Grid>
 
-            <Grid item>
-              <Button 
-                variant="contained"
-                color="secondary"
-                className={classes.buttonNegative}
-                type="submit"
-                onClick={this.revertPermision}
-              >
-                Remove Chestnut Permission
-              </Button>
+              <Grid item>
+                <Button 
+                  variant="contained"
+                  color="secondary"
+                  className={classes.buttonNegative}
+                  type="submit"
+                  onClick={this.proposeRemove}
+                >
+                  Remove Smart Account
+                </Button>
+              </Grid>
+
+              <Grid item>
+                <Button 
+                  variant="contained"
+                  color="secondary"
+                  className={classes.buttonNegative}
+                  type="submit"
+                  onClick={this.revertPermision}
+                >
+                  Remove Chestnut Permission
+                </Button>
+              </Grid>
             </Grid>
 
           </Grid>
+        </Grid>
         )
     }
 }
