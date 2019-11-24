@@ -47,7 +47,7 @@ class AccountDetails extends Component {
           <div className={classes.root}>
             <Grid
               container
-              spacing={0}
+              spacing={1}
               direction="column"
               alignItems="stretch"
               justify="center"

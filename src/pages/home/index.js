@@ -201,7 +201,7 @@ class Home extends Component{
 
           <Grid
             container
-            spacing={0}
+            spacing={2}
             direction="column"
             alignItems="center"
             justify="center"
